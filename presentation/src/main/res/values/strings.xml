@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GitHub User Viewer</string>
+    <string name="error_message">An error occurred, Click here to try again.</string>
+    <string name="try_again">Try Again</string>
+    <string name="loading">Loading…</string>
+    <string name="followers">%s Followers</string>
+    <string name="following">%s Following</string>
+    <string name="end_of_list">You have reached the end of the list.</string>
+    <string name="blog">Blog</string>
+    <string name="user_list">GitHub Users</string>
+    <string name="user_details">User Details</string>
+</resources>
