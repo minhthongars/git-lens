@@ -3,12 +3,12 @@ package com.thongars.gitlens.app
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.thongars.domain.UserMediator
-import com.thongars.data.database.UserDatabase
+import com.thongars.data.UserMediator
 import com.thongars.data.database.dao.UserDao
 import com.thongars.data.database.model.UserEntity
 import com.thongars.data.remote.ApiConstant
 import com.thongars.data.remote.GitHubApi
+import com.thongars.domain.model.User
 import com.thongars.domain.repository.LocalUserRepository
 import com.thongars.domain.repository.RemoteUserRepository
 import dagger.Module
@@ -24,7 +24,10 @@ object AppModule {
     @OptIn(ExperimentalPagingApi::class)
     @Provides
     @Singleton
-    fun provideUserPager(userDao: UserDao, gitHubApi: GitHubApi): Pager<Int, UserEntity> {
+    fun provideUserPager(
+        userDao: UserDao,
+        gitHubApi: GitHubApi,
+    ): Pager<Int, UserEntity> {
         return Pager(
             config = PagingConfig(
                 pageSize = ApiConstant.FETCH_USER_LIMIT,
@@ -32,8 +35,8 @@ object AppModule {
                 prefetchDistance = ApiConstant.FETCH_USER_LIMIT
             ),
             remoteMediator = UserMediator(
-                remoteUserRepository = RemoteUserRepository(gitHubApi),
-                localUserRepository = LocalUserRepository(userDao)
+                gitHubApi = gitHubApi,
+                userDao = userDao
             ),
             pagingSourceFactory = {
                 userDao.pagingSource()

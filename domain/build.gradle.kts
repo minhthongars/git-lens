@@ -51,7 +51,6 @@ ksp {
 
 dependencies {
 
-    implementation(project(":data"))
     implementation(project(":utilities"))
 
     // Hilt (Dependency Injection)

@@ -3,7 +3,6 @@ package com.thongars.presentation.ui.userdetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.thongars.domain.DefaultDispatcher
 import com.thongars.domain.model.UserDetail
 import com.thongars.domain.usecase.GetAllLocalUserDetailUseCase
 import com.thongars.domain.usecase.GetUserDetailUseCase
@@ -11,18 +10,10 @@ import com.thongars.domain.usecase.SaveUserDetailUseCase
 import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.ui.route.Screen
 import com.thongars.utilities.handleResourceState
-import com.thongars.utilities.mapToAppError
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -33,7 +24,6 @@ class UserDetailViewModel @Inject constructor(
     private val getUserDetailUseCase: GetUserDetailUseCase,
     private val saveUserDetailUseCase: SaveUserDetailUseCase,
     private val getAllLocalUserDetailUseCase: GetAllLocalUserDetailUseCase,
-    @DefaultDispatcher private val dispatcher: CoroutineDispatcher,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -54,28 +44,19 @@ class UserDetailViewModel @Inject constructor(
     }
 
     private fun observeLocalChange() {
-        getAllLocalUserDetailUseCase
-            .invoke() // Automatically triggered when a user detail is added to the database
-            .map { userDetailList ->
-                // Find the current user's details from the list of user details.
-                // (Details are saved only when viewing user details)
-                val userDetail = userDetailList?.find {
-                    it.user.login == userCommonData.login
-                }
-                if (userDetail != null) {
-                    _uiState.update {
-                        UiState.Success(
-                            data = userDetail.toPresentation()
-                        )
+        viewModelScope.launch {
+            getAllLocalUserDetailUseCase
+                .invoke() // Automatically triggered when a user detail is added to the database
+                .collect { userDetail ->
+                    if (userDetail?.user?.login == userCommonData.login) {
+                        _uiState.update {
+                            UiState.Success(
+                                data = userDetail.toPresentation()
+                            )
+                        }
                     }
                 }
-            }
-            .catch { e ->
-                // Set the error state if an exception occurs while fetching data
-                setErrorState(e.mapToAppError().errorMessage)
-            }
-            .flowOn(dispatcher)
-            .launchIn(viewModelScope)
+        }
     }
 
     private fun isLocalDataShowing(): Boolean {
@@ -107,11 +88,10 @@ class UserDetailViewModel @Inject constructor(
     }
 
     private fun fetchRemoteUserData() {
-        viewModelScope.launch(dispatcher) {
+        viewModelScope.launch {
             getUserDetailUseCase
                 .invoke(
                     username = userCommonData.login,
-                    dispatcher = dispatcher
                 )
                 .collect { state ->
                     handleResourceState(
@@ -131,8 +111,7 @@ class UserDetailViewModel @Inject constructor(
 
     private suspend fun upsertUserDetailFromRemote(user: UserDetail) {
         saveUserDetailUseCase.invoke(
-            user = user,
-            dispatcher = dispatcher
+            user = user
         ).collect { state ->
             handleResourceState(
                 resourceState = state,

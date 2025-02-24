@@ -4,10 +4,14 @@ import android.util.Log
 import com.thongars.data.BuildConfig
 import com.thongars.data.remote.ApiConstant
 import com.thongars.data.remote.GitHubApi
+import com.thongars.data.remote.RemoteUserRepositoryImpl
+import com.thongars.domain.IoDispatcher
+import com.thongars.domain.repository.RemoteUserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -41,4 +45,14 @@ object RemoteModule {
             .build()
             .create(GitHubApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideRemoteRepository(
+        api: GitHubApi,
+        @IoDispatcher dispatcher: CoroutineDispatcher
+    ): RemoteUserRepository {
+        return RemoteUserRepositoryImpl(api, dispatcher)
+    }
+
 }

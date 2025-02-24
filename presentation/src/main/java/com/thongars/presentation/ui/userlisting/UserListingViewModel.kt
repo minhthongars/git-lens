@@ -42,7 +42,8 @@ class UserListingViewModel @Inject constructor(
     private val combineLoadState: MutableStateFlow<CombinedLoadStates?> = MutableStateFlow(null)
 
     val userPagingFlow = fetchUserUseCase
-        .invoke(ioDispatcher)
+        .invoke()
+        .flowOn(ioDispatcher)
         .map { paging ->
             paging.map { it.toPresentation() }
         }
@@ -135,7 +136,8 @@ class UserListingViewModel @Inject constructor(
         val userCommonData = User(
             login = user.userName,
             avatarUrl = user.avatarUrl,
-            htmlUrl = user.landingPageUrl
+            htmlUrl = user.landingPageUrl,
+            order = -1
         )
         sendUiAction(
             UiAction.OpenUserDetail(

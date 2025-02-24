@@ -56,6 +56,9 @@ ksp {
 
 dependencies {
 
+    implementation(project(":domain"))
+    implementation(project(":utilities"))
+
     // Hilt (Dependency Injection)
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

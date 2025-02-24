@@ -4,6 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 data class RemoteUserDetail(
+    val id: Int?,
     val login: String?,
     @field:Json(name = "avatar_url")
     val avatarUrl: String?,

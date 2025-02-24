@@ -21,7 +21,7 @@ object Screen {
     }
 
     @Serializable
-    data class UserDetail(
+    data class  UserDetail(
         val user: User
     ) {
         companion object {

@@ -1,47 +1,21 @@
 package com.thongars.domain.repository
 
-import com.thongars.data.database.dao.UserDao
-import com.thongars.data.database.model.UserDetailEntity
-import com.thongars.data.database.model.UserEntity
-import com.thongars.domain.mapper.toEntity
+import androidx.paging.PagingData
+import com.thongars.domain.model.User
 import com.thongars.domain.model.UserDetail
+import com.thongars.utilities.ResourceState
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class LocalUserRepository @Inject constructor(
-    private val dao: UserDao
-) {
+interface LocalUserRepository {
 
-    suspend fun insertAndUpdateUserListing(users: List<UserEntity>) {
-        dao.upsertAll(users)
-    }
+    fun userPagingDataFlow(): Flow<PagingData<User>>
 
-    suspend fun insertUserDetail(user: UserDetail) {
-        dao.insertUserDetail(user.toEntity())
-    }
+    fun insertUserDetail(user: UserDetail): Flow<ResourceState<Unit>>
 
-    fun getUserDetail(username: String): UserDetailEntity? {
-        return dao.getUserDetail(username)
-    }
+    fun getUserDetail(username: String): Flow<ResourceState<UserDetail?>>
 
-    fun getUser(username: String): UserEntity? {
-        return dao.getUser(username)
-    }
+    fun getUser(username: String): Flow<ResourceState<User?>>
 
-    fun getAllUserDetail(): Flow<List<UserDetailEntity>> {
-        return dao.getAllUserDetail()
-    }
-
-    suspend fun getLastInsertionTime(): Long {
-        return dao.getInsertionTime() ?: 0
-    }
-
-    suspend fun hasUserData(): Boolean {
-        return dao.hasData()
-    }
-
-    suspend fun clearAllUser() {
-        dao.clearAll()
-    }
+    fun getAllUserDetail(): Flow<UserDetail?>
 
 }
