@@ -10,10 +10,14 @@ import com.thongars.domain.usecase.SaveUserDetailUseCase
 import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.ui.route.Screen
 import com.thongars.utilities.handleResourceState
+import com.thongars.utilities.mapToAppError
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,16 +48,19 @@ class UserDetailViewModel @Inject constructor(
     }
 
     private fun observeLocalChange() {
-        viewModelScope.launch {
+
+        val exceptionHandle = CoroutineExceptionHandler { _, throwable ->
+            setErrorState(throwable.mapToAppError().errorMessage)
+        }
+
+        viewModelScope.launch(exceptionHandle) {
             getAllLocalUserDetailUseCase
                 .invoke() // Automatically triggered when a user detail is added to the database
+                .filter { userDetail -> userDetail?.user?.login == userCommonData.login }
+                .distinctUntilChanged()
                 .collect { userDetail ->
-                    if (userDetail?.user?.login == userCommonData.login) {
-                        _uiState.update {
-                            UiState.Success(
-                                data = userDetail.toPresentation()
-                            )
-                        }
+                    _uiState.update {
+                        UiState.Success(data = userDetail!!.toPresentation()) //userDetail can not null after filter
                     }
                 }
         }

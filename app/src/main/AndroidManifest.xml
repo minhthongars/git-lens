@@ -25,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="com.thongars.data.provider.UserContentProvider"
+            android:authorities="com.thongars.gitlens.provider"
+            android:exported="true" />
+
     </application>
 
 </manifest>

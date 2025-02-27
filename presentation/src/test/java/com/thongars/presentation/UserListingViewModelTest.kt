@@ -119,29 +119,24 @@ class UserListingViewModelTest: BaseTestClassNoPowerMock() {
 
         job.cancel()
 
-        Assert.assertEquals(
-            UserListingViewModel.UiState.Loading,
-            uiStates.first()
-        )
-        Assert.assertEquals(
-            UserListingViewModel.UiState.Loading,
-            uiStates[1]
-        )
-        Assert.assertEquals(
-            UserListingViewModel.UiState.Loading,
-            uiStates[2]
-        )
-        Assert.assertTrue(
-            uiStates[3] is UserListingViewModel.UiState.Error,
-        )
-        Assert.assertTrue(
-            uiStates[4] is UserListingViewModel.UiState.Success &&
-            (uiStates[4] as UserListingViewModel.UiState.Success).footerState is UserListingViewModel.UiState.FooterState.LoadingMore
-        )
+        val theFirstStateWillBeLoading = UserListingViewModel.UiState.Loading == uiStates.first() //init state
+        Assert.assertTrue(theFirstStateWillBeLoading)
 
-        Assert.assertTrue(
-            (uiStates[5] as UserListingViewModel.UiState.Success).footerState is UserListingViewModel.UiState.FooterState.Ending
-        )
+        val nextTwoStateStillHaveNoData = (UserListingViewModel.UiState.Loading == uiStates[1]) && (uiStates[1] == uiStates[2]) // still loading
+        Assert.assertTrue(nextTwoStateStillHaveNoData)
+
+        val nextStateIsError = uiStates[3] is UserListingViewModel.UiState.Error
+        Assert.assertTrue(nextStateIsError)
+
+        val nextState = uiStates[4] as? UserListingViewModel.UiState.Success //3rd state
+        val nextStateIsSuccess = nextState != null
+        val andFooterStateIsLoadingMore = nextState?.footerState is UserListingViewModel.UiState.FooterState.LoadingMore //endOfPaginationReached = false
+        Assert.assertTrue(nextStateIsSuccess && andFooterStateIsLoadingMore)
+
+        val lastState = uiStates[5] as? UserListingViewModel.UiState.Success
+        val lastStateIsSuccess = lastState != null
+        val andFooterStateIsEnding = lastState?.footerState is UserListingViewModel.UiState.FooterState.Ending //endOfPaginationReached = true
+        Assert.assertTrue(lastStateIsSuccess && andFooterStateIsEnding)
     }
 
     @Test

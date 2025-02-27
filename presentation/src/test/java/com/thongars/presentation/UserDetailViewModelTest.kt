@@ -16,7 +16,6 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -33,13 +32,13 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
     private val getUserDetailUseCase: GetUserDetailUseCase = mockk()
     private val saveUserDetailUseCase: SaveUserDetailUseCase = mockk()
     private val getAllLocalUserDetailUseCase: GetAllLocalUserDetailUseCase = mockk()
-    private val dispatcher: CoroutineDispatcher = testCoroutineDispatcher
     private val savedStateHandle: SavedStateHandle = mockk(relaxed = true, relaxUnitFun = true)
 
     private val mockedUser = User(
         login = "minhthong",
         avatarUrl = "avatar.com",
-        htmlUrl = "html.com.vn"
+        htmlUrl = "html.com.vn",
+        order = 1
     )
 
     private val mockedUserDetail = UserDetail(
@@ -68,10 +67,10 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(listOf())
+        } returns flowOf(null)
 
         coEvery {
-            getUserDetailUseCase.invoke(mockedUser.login, testCoroutineDispatcher)
+            getUserDetailUseCase.invoke(mockedUser.login)
         } returns flowOf(
             ResourceState.Success(
                 data = mockedUserDetail
@@ -79,7 +78,7 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
         )
 
         coEvery {
-            saveUserDetailUseCase.invoke(mockedUserDetail, testCoroutineDispatcher)
+            saveUserDetailUseCase.invoke(mockedUserDetail)
         } returns flowOf(ResourceState.Error(message = mockErrorMessage))
 
         val uiStates = mutableListOf<UserDetailViewModel.UiState?>()
@@ -93,7 +92,6 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
             getUserDetailUseCase,
             saveUserDetailUseCase,
             getAllLocalUserDetailUseCase,
-            dispatcher,
             savedStateHandle
         )
 
@@ -119,10 +117,10 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(listOf(mockedUserDetail))
+        } returns flowOf(mockedUserDetail)
 
         coEvery {
-            getUserDetailUseCase.invoke(mockedUser.login, testCoroutineDispatcher)
+            getUserDetailUseCase.invoke(mockedUser.login)
         } returns flowOf(
             ResourceState.Error(
                 message = mockErrorMessage
@@ -140,7 +138,6 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
             getUserDetailUseCase,
             saveUserDetailUseCase,
             getAllLocalUserDetailUseCase,
-            dispatcher,
             savedStateHandle
         )
 
@@ -166,10 +163,10 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(listOf(mockedUserDetail))
+        } returns flowOf(mockedUserDetail)
 
         coEvery {
-            getUserDetailUseCase.invoke(mockedUser.login, testCoroutineDispatcher)
+            getUserDetailUseCase.invoke(mockedUser.login)
         } returns flowOf(
             ResourceState.Success(
                 data = mockedUserDetail
@@ -177,7 +174,7 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
         )
 
         coEvery {
-            saveUserDetailUseCase.invoke(mockedUserDetail, testCoroutineDispatcher)
+            saveUserDetailUseCase.invoke(mockedUserDetail)
         } returns flowOf(ResourceState.Error(message = mockErrorMessage))
 
         val uiStates = mutableListOf<UserDetailViewModel.UiState?>()
@@ -191,7 +188,6 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
             getUserDetailUseCase,
             saveUserDetailUseCase,
             getAllLocalUserDetailUseCase,
-            dispatcher,
             savedStateHandle
         )
 

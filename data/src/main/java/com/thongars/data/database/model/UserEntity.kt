@@ -10,8 +10,11 @@ data class UserEntity(
     @PrimaryKey
     @ColumnInfo(name = DatabaseConstant.LOGIN_FOREIGN_KEY)
     val login: String,
+    @ColumnInfo(name = DatabaseConstant.COLUMN_ORDER)
     val order: Int,
+    @ColumnInfo(name = DatabaseConstant.COLUMN_AVATAR)
     val avatarUrl: String?,
+    @ColumnInfo(name = DatabaseConstant.COLUMN_HTML)
     val htmlUrl: String?,
     val timestamp: Long? = System.currentTimeMillis(),
 )

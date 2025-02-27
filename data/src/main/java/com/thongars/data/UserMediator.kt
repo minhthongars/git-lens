@@ -27,9 +27,9 @@ class UserMediator(
         return if (System.currentTimeMillis() - lastInsertionTime < cacheTimeout) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
-            runBlocking {
-                userDao.clearAll()
-            }
+//            runBlocking {
+//                userDao.clearAll()
+//            }
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }

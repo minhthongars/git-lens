@@ -9,6 +9,7 @@ import com.thongars.data.database.UserDatabase
 import com.thongars.data.database.dao.UserDao
 import com.thongars.data.database.model.UserEntity
 import com.thongars.domain.IoDispatcher
+import com.thongars.domain.repository.ContentResolveRepository
 import com.thongars.domain.repository.LocalUserRepository
 import dagger.Module
 import dagger.Provides
@@ -47,8 +48,29 @@ object DatabaseModule {
     fun provideLocalRepository(
         dao: UserDao,
         pager: Pager<Int, UserEntity>,
-        @IoDispatcher dispatcher: CoroutineDispatcher
+        @IoDispatcher dispatcher: CoroutineDispatcher,
     ): LocalUserRepository {
-        return LocalUserRepositoryImpl(dao, pager, dispatcher)
+        return LocalUserRepositoryImpl(
+            dao,
+            pager,
+            null,
+            dispatcher
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideContentResolverRepository(
+        dao: UserDao,
+        pager: Pager<Int, UserEntity>,
+        @IoDispatcher dispatcher: CoroutineDispatcher,
+        @ApplicationContext context: Context
+    ): ContentResolveRepository {
+        return LocalUserRepositoryImpl(
+            dao,
+            pager,
+            context.contentResolver,
+            dispatcher
+        )
     }
 }
