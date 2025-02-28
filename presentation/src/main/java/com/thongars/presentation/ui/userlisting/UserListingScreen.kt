@@ -42,8 +42,8 @@ fun UserListingScreen(
     navController: NavHostController
 ) {
 
-    val users = viewModel.userPagingFlow.collectAsLazyPagingItems()
-    viewModel.setCombinedLoadStates(users.loadState)
+    val userPagingItems = viewModel.userPagingFlow.collectAsLazyPagingItems()
+    viewModel.setCombinedLoadStates(userPagingItems.loadState)
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle(initialValue = UserListingViewModel.UiState.Loading)
 
@@ -56,7 +56,7 @@ fun UserListingScreen(
                         navController.navigate(action.data)
                     }
                     is UserListingViewModel.UiAction.ReloadUserListing -> {
-                        users.refresh()
+                        userPagingItems.refresh()
                     }
                     else -> Unit
                 }
@@ -66,7 +66,7 @@ fun UserListingScreen(
 
     UserListingContent(
         uiState = uiState,
-        pagingItems = users,
+        pagingItems = userPagingItems,
         onUserClick = { user ->
             viewModel.navigateToUserDetailScreen(user)
         },

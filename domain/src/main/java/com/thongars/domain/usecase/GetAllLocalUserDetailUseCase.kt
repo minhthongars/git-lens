@@ -9,7 +9,7 @@ class GetAllLocalUserDetailUseCase @Inject constructor(
     private val localUserRepository: LocalUserRepository,
 ) {
 
-    operator fun invoke(): Flow<UserDetail?> {
+    operator fun invoke(): Flow<List<UserDetail>> {
         return localUserRepository.getAllUserDetail()
     }
 }

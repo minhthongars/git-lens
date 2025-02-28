@@ -49,7 +49,13 @@ class LocalUserRepositoryImpl @Inject constructor(
         return safeFetchDataCall(
             dispatcher = ioDispatcher,
             fetchDataCall = {
-                val cursor = contentResolver?.query(UserContentProvider.CONTENT_URI, null, null, null, null)
+                val cursor = contentResolver?.query(
+                    UserContentProvider.CONTENT_URI,
+                    null,
+                    null,
+                    null,
+                    null
+                )
                 val userList = mutableListOf<User>()
                 withContext(defaultDispatcher) {
                     cursor?.use { item ->
@@ -67,7 +73,7 @@ class LocalUserRepositoryImpl @Inject constructor(
         return safeFetchDataCall(
             dispatcher = ioDispatcher,
             fetchDataCall = {
-                val uri: Uri = Uri.withAppendedPath(UserContentProvider.CONTENT_URI, username)
+                val uri = Uri.withAppendedPath(UserContentProvider.CONTENT_URI, username)
                 val cursor = contentResolver?.query(uri, null, null, null, null)
                 var user: User? = null
                 cursor?.use { item ->
@@ -118,17 +124,15 @@ class LocalUserRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun getAllUserDetail(): Flow<UserDetail?> {
-        val userDetailEntitiesFlow = dao.getAllUserDetail()
-        return userDetailEntitiesFlow.flatMapLatest { userDetailEntities ->
-            flow {
+    override fun getAllUserDetail(): Flow<List<UserDetail>> {
+        return dao.getAllUserDetail()
+            .map { userDetailEntities ->
                 userDetailEntities.map { userDetailEntity ->
                     val username = userDetailEntity.login
                     val user = dao.getUser(username)
-                    emit(userDetailEntity.toDomain(user!!))
+                    userDetailEntity.toDomain(user!!)
                 }
             }
-        }
             .flowOn(ioDispatcher)
     }
 

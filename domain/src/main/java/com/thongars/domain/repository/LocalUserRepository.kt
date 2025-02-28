@@ -16,6 +16,6 @@ interface LocalUserRepository {
 
     fun getUser(username: String): Flow<ResourceState<User?>>
 
-    fun getAllUserDetail(): Flow<UserDetail?>
+    fun getAllUserDetail(): Flow<List<UserDetail>>
 
 }

@@ -40,7 +40,6 @@ class UserListingViewModelTest: BaseTestClassNoPowerMock() {
 
         target = UserListingViewModel(
             fetchUserUseCase,
-            testCoroutineDispatcher,
             testCoroutineDispatcher
         )
     }

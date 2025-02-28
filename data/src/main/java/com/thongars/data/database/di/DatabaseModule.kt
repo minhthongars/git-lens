@@ -8,6 +8,7 @@ import com.thongars.data.database.LocalUserRepositoryImpl
 import com.thongars.data.database.UserDatabase
 import com.thongars.data.database.dao.UserDao
 import com.thongars.data.database.model.UserEntity
+import com.thongars.domain.DefaultDispatcher
 import com.thongars.domain.IoDispatcher
 import com.thongars.domain.repository.ContentResolveRepository
 import com.thongars.domain.repository.LocalUserRepository
@@ -48,13 +49,15 @@ object DatabaseModule {
     fun provideLocalRepository(
         dao: UserDao,
         pager: Pager<Int, UserEntity>,
-        @IoDispatcher dispatcher: CoroutineDispatcher,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     ): LocalUserRepository {
         return LocalUserRepositoryImpl(
-            dao,
-            pager,
-            null,
-            dispatcher
+            dao = dao,
+            pager = pager,
+            contentResolver = null,
+            ioDispatcher = ioDispatcher,
+            defaultDispatcher = defaultDispatcher
         )
     }
 
@@ -63,14 +66,16 @@ object DatabaseModule {
     fun provideContentResolverRepository(
         dao: UserDao,
         pager: Pager<Int, UserEntity>,
-        @IoDispatcher dispatcher: CoroutineDispatcher,
-        @ApplicationContext context: Context
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+        @ApplicationContext context: Context,
     ): ContentResolveRepository {
         return LocalUserRepositoryImpl(
-            dao,
-            pager,
-            context.contentResolver,
-            dispatcher
+            dao = dao,
+            pager = pager,
+            contentResolver = context.contentResolver,
+            ioDispatcher = ioDispatcher,
+            defaultDispatcher = defaultDispatcher
         )
     }
 }

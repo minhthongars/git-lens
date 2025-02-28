@@ -8,7 +8,6 @@ import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.thongars.domain.DefaultDispatcher
-import com.thongars.domain.IoDispatcher
 import com.thongars.domain.model.User
 import com.thongars.domain.usecase.FetchUserUseCase
 import com.thongars.presentation.R
@@ -31,8 +30,7 @@ import com.thongars.presentation.model.User as UiUser
 @HiltViewModel
 class UserListingViewModel @Inject constructor(
     fetchUserUseCase: FetchUserUseCase,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _uiAction: Channel<UiAction?> = Channel()
@@ -42,10 +40,10 @@ class UserListingViewModel @Inject constructor(
 
     val userPagingFlow = fetchUserUseCase
         .invoke()
-        .flowOn(ioDispatcher)
         .map { paging ->
             paging.map { it.toPresentation() }
         }
+        .flowOn(defaultDispatcher)
         .cachedIn(viewModelScope)
 
     val uiState = combineLoadState.map { loadState ->

@@ -56,11 +56,13 @@ class UserDetailViewModel @Inject constructor(
         viewModelScope.launch(exceptionHandle) {
             getAllLocalUserDetailUseCase
                 .invoke() // Automatically triggered when a user detail is added to the database
-                .filter { userDetail -> userDetail?.user?.login == userCommonData.login }
                 .distinctUntilChanged()
-                .collect { userDetail ->
-                    _uiState.update {
-                        UiState.Success(data = userDetail!!.toPresentation()) //userDetail can not null after filter
+                .collect { userDetails ->
+                    val findUser = userDetails.find { it.user.login == userCommonData.login }
+                    findUser?.let { userDetail ->
+                        _uiState.update {
+                            UiState.Success(data = userDetail.toPresentation()) //userDetail can not null after filter
+                        }
                     }
                 }
         }
