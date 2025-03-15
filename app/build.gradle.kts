@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("kotlin-parcelize")
@@ -57,6 +58,8 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
             excludes += "/META-INF/gradle/incremental.annotation.processors"
+            excludes += "/META-INF/INDEX.LIST"
+            excludes += "/META-INF/io.netty.versions.properties"
         }
     }
 }
@@ -88,12 +91,6 @@ dependencies {
     ksp(libs.androidx.room.complier)
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.paging)
-
-    // Networking
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.converter.moshi)
-    implementation(libs.squareup.okhttp.logging.interceptor)
-
 
     // Image Loading
     implementation(libs.io.coil)

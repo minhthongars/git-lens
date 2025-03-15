@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("kotlin-parcelize")
@@ -78,16 +79,20 @@ dependencies {
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.paging)
 
-    // Networking
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.converter.moshi)
-    implementation(libs.squareup.okhttp.logging.interceptor)
-
     //ktor
-    implementation(libs.ktor.client.android)
+
+    implementation(libs.ktor.server.core)
+    implementation(libs.ktor.server.netty)
     implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.serialization.jvm)
+    implementation(libs.ktor.client.cio)
+
+    //implementation(libs.ktor.serialization)
+    implementation(libs.ktor.server.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.content.negotiation)
+
     implementation(libs.ktor.client.logging)
+    implementation(libs.ktor.client.android)
 
 }
 

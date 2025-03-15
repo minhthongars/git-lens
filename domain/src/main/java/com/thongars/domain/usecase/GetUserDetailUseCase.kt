@@ -9,7 +9,7 @@ class GetUserDetailUseCase(
     private val remoteUserRepository: RemoteUserRepository,
 ) {
 
-    operator fun invoke(username: String): Flow<ResourceState<UserDetail>> {
+    suspend operator fun invoke(username: String): Flow<ResourceState<UserDetail>> {
         return remoteUserRepository.getUserDetail(username)
     }
 }

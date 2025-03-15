@@ -6,6 +6,6 @@ import com.thongars.utilities.ResourceState
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteUserRepository {
-    fun fetchUserListing(limit: Int, since: Int): Flow<ResourceState<List<User>>>
-    fun getUserDetail(username: String):  Flow<ResourceState<UserDetail>>
+    suspend fun fetchUserListing(limit: Int, since: Int): List<User>
+    suspend fun getUserDetail(username: String):  Flow<ResourceState<UserDetail>>
 }

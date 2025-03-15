@@ -8,14 +8,15 @@ import com.thongars.data.database.dao.UserDao
 import com.thongars.data.database.model.UserEntity
 import com.thongars.data.mapper.toEntity
 import com.thongars.data.remote.ApiConstant
-import com.thongars.data.remote.GitHubApi
+import com.thongars.domain.repository.RemoteUserRepository
+import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.TimeUnit
 
 
 @OptIn(ExperimentalPagingApi::class)
 class UserMediator(
-    private val gitHubApi: GitHubApi,
+    private val remoteUserRepository: RemoteUserRepository,
     private val userDao: UserDao
 ): RemoteMediator<Int, UserEntity>() {
 
@@ -27,9 +28,9 @@ class UserMediator(
         return if (System.currentTimeMillis() - lastInsertionTime < cacheTimeout) {
             InitializeAction.SKIP_INITIAL_REFRESH
         } else {
-//            runBlocking {
-//                userDao.clearAll()
-//            }
+            runBlocking {
+                userDao.clearAll()
+            }
             InitializeAction.LAUNCH_INITIAL_REFRESH
         }
     }
@@ -53,8 +54,8 @@ class UserMediator(
                 }
             }
 
-            val users = gitHubApi.getUsers(
-                perPage = state.config.pageSize,
+            val users = remoteUserRepository.fetchUserListing(
+                limit = state.config.pageSize,
                 since = since
             ).map {
                 it.toEntity()

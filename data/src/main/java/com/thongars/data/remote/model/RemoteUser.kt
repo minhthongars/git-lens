@@ -1,13 +1,14 @@
 package com.thongars.data.remote.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class RemoteUser(
-    val id: Int?,
-    val login: String?,
-    @field:Json(name = "avatar_url")
-    val avatarUrl: String?,
-    @field:Json(name = "html_url")
-    val htmlUrl: String?,
+    val id: Int? = null,
+    val login: String? = null,
+    @SerialName("avatar_url")
+    val avatarUrl: String? = null,
+    @SerialName("html_url")
+    val htmlUrl: String? = null,
 )

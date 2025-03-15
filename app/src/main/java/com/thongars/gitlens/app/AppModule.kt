@@ -19,7 +19,7 @@ val appModule = module {
                 prefetchDistance = ApiConstant.FETCH_USER_LIMIT
             ),
             remoteMediator = UserMediator(
-                gitHubApi = get(),
+                remoteUserRepository = get(),
                 userDao = get()
             ),
             pagingSourceFactory = {

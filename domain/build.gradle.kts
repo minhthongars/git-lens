@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("kotlin-parcelize")
@@ -71,11 +72,6 @@ dependencies {
     ksp(libs.androidx.room.complier)
     implementation(libs.androidx.room)
     implementation(libs.androidx.room.paging)
-
-    // Networking
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.converter.moshi)
-    implementation(libs.squareup.okhttp.logging.interceptor)
     
     // Testing
     testImplementation(libs.junit)
