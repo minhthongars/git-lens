@@ -7,14 +7,12 @@ import androidx.paging.CombinedLoadStates
 import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import androidx.paging.map
-import com.thongars.domain.DefaultDispatcher
 import com.thongars.domain.model.User
 import com.thongars.domain.usecase.FetchUserUseCase
 import com.thongars.presentation.R
 import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.ui.route.Screen
 import com.thongars.utilities.mapToAppError
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -24,13 +22,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import com.thongars.presentation.model.User as UiUser
 
-@HiltViewModel
-class UserListingViewModel @Inject constructor(
+class UserListingViewModel(
     fetchUserUseCase: FetchUserUseCase,
-    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher
+    private val defaultDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _uiAction: Channel<UiAction?> = Channel()

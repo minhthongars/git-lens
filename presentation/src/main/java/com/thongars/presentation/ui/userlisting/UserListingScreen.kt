@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -26,7 +25,6 @@ import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.thongars.presentation.R
 import com.thongars.presentation.model.User
 import com.thongars.presentation.ui.component.ErrorScreenComponent
 import com.thongars.presentation.ui.component.FooterMessage
@@ -35,10 +33,11 @@ import com.thongars.presentation.ui.component.UserItem
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun UserListingScreen(
-    viewModel: UserListingViewModel = hiltViewModel(),
+    viewModel: UserListingViewModel = koinViewModel(),
     navController: NavHostController
 ) {
 

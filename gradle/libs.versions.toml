@@ -3,9 +3,13 @@
 agp = "8.5.1"
 kotlin = "1.9.0"
 
+#Koin
+koin = "4.0.0"
+
 # Core Libraries
 coreKtx = "1.13.1"
 kotlinxCoroutinesTest = "1.10.1"
+ktorVersion = "3.0.0"
 lifecycleRuntimeKtx = "2.8.4"
 activityCompose = "1.8.0"
 composeBom = "2024.04.01"
@@ -92,6 +96,10 @@ androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 
 # Networking
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorVersion" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
+ktor-client-serialization-jvm = { module = "io.ktor:ktor-client-serialization-jvm", version.ref = "ktorVersion" }
 squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 squareup-retrofit2-converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 squareup-okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogging" }
@@ -122,6 +130,8 @@ powermock-mockito2 = { group = "org.powermock", name = "powermock-api-mockito2",
 benchmark-junit4 = { group = "org.junit", name = "junit", version.ref = "benchmarkJunit4" }
 androidx-paging-test = { group = "androidx.paging", name = "paging-testing-android", version.ref = "pagingTest"}
 
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 
 [plugins]

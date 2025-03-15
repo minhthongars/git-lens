@@ -1,17 +1,15 @@
 package com.thongars.data.remote
 
 import com.thongars.data.mapper.toDomain
-import com.thongars.domain.IoDispatcher
 import com.thongars.domain.model.User
 import com.thongars.domain.model.UserDetail
 import com.thongars.domain.repository.RemoteUserRepository
 import com.thongars.utilities.ResourceState
-import kotlinx.coroutines.CoroutineDispatcher
 import com.thongars.utilities.safeFetchDataCall
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class RemoteUserRepositoryImpl @Inject constructor(
+class RemoteUserRepositoryImpl(
     private val gitHubApi: GitHubApi,
     private val ioDispatcher: CoroutineDispatcher,
 ) : RemoteUserRepository {

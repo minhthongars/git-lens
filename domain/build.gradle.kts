@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
@@ -53,11 +52,6 @@ dependencies {
 
     implementation(project(":utilities"))
 
-    // Hilt (Dependency Injection)
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    implementation(libs.androix.hiltNavigationCompose)
-
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
@@ -67,6 +61,10 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
+
+    //koin
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.android)
 
     // Room (Database)
     implementation(libs.androix.room.runtime)

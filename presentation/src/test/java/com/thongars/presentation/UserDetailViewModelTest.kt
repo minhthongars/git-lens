@@ -67,7 +67,7 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(null)
+        } returns flowOf(emptyList())
 
         coEvery {
             getUserDetailUseCase.invoke(mockedUser.login)
@@ -117,7 +117,7 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(mockedUserDetail)
+        } returns flowOf(listOf(mockedUserDetail))
 
         coEvery {
             getUserDetailUseCase.invoke(mockedUser.login)
@@ -163,7 +163,7 @@ class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
         every {
             getAllLocalUserDetailUseCase.invoke()
-        } returns flowOf(mockedUserDetail)
+        } returns flowOf(listOf(mockedUserDetail))
 
         coEvery {
             getUserDetailUseCase.invoke(mockedUser.login)

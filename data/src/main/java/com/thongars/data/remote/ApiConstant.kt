@@ -8,4 +8,6 @@ object ApiConstant {
     const val WRITE_TIME_OUT = 20L
     const val FETCH_USER_LIMIT = 20
     const val USER_CACHE_TIME = 30L
+    const val AUTHORIZATION = "Authorization"
+    const val BEARER = "Bearer"
 }

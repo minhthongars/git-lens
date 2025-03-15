@@ -5,9 +5,14 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import dagger.hilt.android.HiltAndroidApp
+import com.thongars.data.database.di.databaseModule
+import com.thongars.data.remote.di.remoteModule
+import com.thongars.data.coroutineDispatchersModule
+import com.thongars.domain.domainModule
+import com.thongars.presentation.presentationModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.GlobalContext.startKoin
 
-@HiltAndroidApp
 class GitLensApplication : Application(), ImageLoaderFactory {
 
     override fun newImageLoader() = ImageLoader.Builder(this)
@@ -24,4 +29,23 @@ class GitLensApplication : Application(), ImageLoaderFactory {
                 .build()
         }
         .build()
+
+    override fun onCreate() {
+        super.onCreate()
+
+
+        startKoin {
+            androidContext(this@GitLensApplication)
+            modules(
+                listOf(
+                    databaseModule,
+                    remoteModule,
+                    appModule,
+                    domainModule,
+                    presentationModule,
+                    coroutineDispatchersModule
+                )
+            )
+        }
+    }
 }

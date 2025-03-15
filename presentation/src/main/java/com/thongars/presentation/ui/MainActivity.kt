@@ -20,7 +20,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,10 +29,8 @@ import com.thongars.presentation.ui.route.Screen
 import com.thongars.presentation.ui.theme.GitLensTheme
 import com.thongars.presentation.ui.userdetail.UserDetailScreen
 import com.thongars.presentation.ui.userlisting.UserListingScreen
-import dagger.hilt.android.AndroidEntryPoint
+import org.koin.androidx.compose.koinViewModel
 
-@Keep
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,12 +42,13 @@ class MainActivity : ComponentActivity() {
                 MainScreen()
             }
         }
+
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(mainViewModel: MainViewModel = hiltViewModel()) {
+fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
     val navController = rememberNavController()
 
     val currentBackStack by navController

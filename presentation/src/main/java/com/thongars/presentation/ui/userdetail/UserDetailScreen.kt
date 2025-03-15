@@ -22,16 +22,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.thongars.presentation.R
 import com.thongars.presentation.model.User
 import com.thongars.presentation.model.UserDetail
 import com.thongars.presentation.ui.component.ErrorScreenComponent
 import com.thongars.presentation.ui.component.UserItem
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun UserDetailScreen(viewModel: UserDetailViewModel = hiltViewModel()) {
+fun UserDetailScreen(viewModel: UserDetailViewModel = koinViewModel()) {
 
     val uiState: UserDetailViewModel.UiState? = viewModel
         .uiState

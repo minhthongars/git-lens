@@ -11,20 +11,16 @@ import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.ui.route.Screen
 import com.thongars.utilities.handleResourceState
 import com.thongars.utilities.mapToAppError
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import com.thongars.presentation.model.UserDetail as UiUserDetail
 
-@HiltViewModel
-class UserDetailViewModel @Inject constructor(
+class UserDetailViewModel(
     private val getUserDetailUseCase: GetUserDetailUseCase,
     private val saveUserDetailUseCase: SaveUserDetailUseCase,
     private val getAllLocalUserDetailUseCase: GetAllLocalUserDetailUseCase,

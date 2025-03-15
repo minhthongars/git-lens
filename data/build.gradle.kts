@@ -3,7 +3,6 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
@@ -59,17 +58,16 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":utilities"))
 
-    // Hilt (Dependency Injection)
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    implementation(libs.androix.hiltNavigationCompose)
-
     // Navigation
     implementation(libs.androidx.navigation.compose)
 
     // Coroutines
     implementation(libs.kotlinx.coroutineAndroid)
     implementation(libs.kotlinx.coroutine)
+
+    //koin
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.android)
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
@@ -85,12 +83,11 @@ dependencies {
     implementation(libs.squareup.retrofit2.converter.moshi)
     implementation(libs.squareup.okhttp.logging.interceptor)
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    //ktor
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.serialization.jvm)
+    implementation(libs.ktor.client.logging)
 
 }
 
