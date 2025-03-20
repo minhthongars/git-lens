@@ -27,7 +27,7 @@ val databaseModule = module {
 
     single<LocalUserRepository> {
         LocalUserRepositoryImpl(
-            dao = get(),
+            dao = get<UserDao>(),
             pager = get(),
             ioDispatcher = get(named(DispatcherName.IO))
         )
