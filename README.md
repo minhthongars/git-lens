@@ -12,14 +12,14 @@ Features:\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Caching mechanism using Room database for offline access.\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagination support to load more users as you scroll.\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Error handling with retry functionality.\
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Modern Android development with Jetpack Compose, Hilt, and Paging.\
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Modern Android development with Jetpack Compose, Hilt, and Paging.
 
 Tech Stack:\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Programming Language: Kotlin\
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Architecture: MVVM (Model-View-ViewModel)\
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Architecture: MVVM/Clean architecture\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UI: Jetpack Compose\
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dependency Injection: Hilt\
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Networking: Retrofit\
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dependency Injection: Hilt --> Koin\
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Networking: Retrofit --> ktor\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pagination: Paging 3\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local Database: Room\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State Management: Flow\
