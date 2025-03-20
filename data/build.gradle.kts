@@ -18,9 +18,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        val properties = Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-        buildConfigField(type = "String",name = "API_KEY", "\"${properties.getProperty("STAGING_API_KEY")}\"")
+        val localPropertiesFile = project.rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) { //for github runner
+            val properties = Properties().apply {
+                load(localPropertiesFile.inputStream())
+            }
+            buildConfigField("String", "API_KEY", "\"${properties.getProperty("STAGING_API_KEY")}\"")
+        } else {
+            logger.warn("local.properties does not exist. Please create this file with the required information!")
+        }
     }
 
     buildTypes {
