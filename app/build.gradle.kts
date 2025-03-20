@@ -3,9 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -56,12 +54,11 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-            excludes += "/META-INF/gradle/incremental.annotation.processors"
-            excludes += "/META-INF/INDEX.LIST"
-            excludes += "/META-INF/io.netty.versions.properties"
+            excludes += "/META-INF/*"
+            excludes += "META-INF/*"
         }
     }
+
 }
 
 ksp {
@@ -74,6 +71,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":presentation"))
     implementation(project(":utilities"))
+    implementation(project(":test"))
 
     //koin
     implementation(libs.koin.androidx.compose)
@@ -94,8 +92,4 @@ dependencies {
 
     // Image Loading
     implementation(libs.io.coil)
-}
-
-kapt {
-    correctErrorTypes = true
 }

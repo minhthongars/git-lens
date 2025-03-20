@@ -4,8 +4,19 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.android.library) apply false
-    id("com.google.devtools.ksp") version "2.0.20-1.0.24" apply false
+    alias(libs.plugins.ksp) apply false
     application
     kotlin("jvm") version "1.4.21"
     kotlin("plugin.serialization") version "1.4.21"
 }
+
+extra["koverIncludeClasses"] = listOf(
+    "*ViewModel",
+    "*ViewModel\$*",
+    "*UseCase",
+    "*UseCase\$*",
+    "*Repository",
+    "*Repository\$",
+    "*RepositoryImpl",
+    "*RepositoryImpl\$"
+)

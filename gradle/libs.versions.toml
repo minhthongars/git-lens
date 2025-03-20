@@ -2,6 +2,8 @@
 # Plugin Versions
 agp = "8.5.1"
 kotlin = "2.0.0"
+ksp = "2.0.20-1.0.24"
+kover = "0.6.1"
 
 #Koin
 koin = "4.0.0"
@@ -35,6 +37,7 @@ room = "2.6.1"
 # Serialization & Coroutines
 kotlinxSerializationJson = "1.6.0"
 coroutine = "1.7.3"
+serialization = "1.4.21"
 
 # Testing
 junit = "4.13.2"
@@ -54,6 +57,7 @@ securityCryptoKtx = "1.0.0"
 
 # Navigation
 navigation = "2.8.0"
+materialVersion = "1.12.0"
 
 [libraries]
 # Core Libraries
@@ -139,6 +143,7 @@ androidx-paging-test = { group = "androidx.paging", name = "paging-testing-andro
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 
 
 [plugins]
@@ -146,5 +151,8 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.4.21" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+

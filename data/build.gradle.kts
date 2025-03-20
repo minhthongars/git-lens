@@ -5,9 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -47,6 +45,12 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/*"
+            excludes += "META-INF/*"
+        }
     }
 }
 
@@ -94,8 +98,4 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.android)
 
-}
-
-kapt {
-    correctErrorTypes = true
 }

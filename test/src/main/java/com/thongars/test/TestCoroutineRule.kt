@@ -1,4 +1,4 @@
-package com.thongars.utilities.test
+package com.thongars.test
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

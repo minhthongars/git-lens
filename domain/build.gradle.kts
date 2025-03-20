@@ -3,9 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kover)
 }
 
 android {
@@ -43,6 +42,12 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/*"
+            excludes += "META-INF/*"
+        }
+    }
 }
 
 ksp {
@@ -52,6 +57,7 @@ ksp {
 dependencies {
 
     implementation(project(":utilities"))
+    testImplementation(project(":test"))
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
@@ -83,6 +89,15 @@ dependencies {
 
 }
 
-kapt {
-    correctErrorTypes = true
+val koverIncludeClasses: List<String> by rootProject.extra
+kover {
+    instrumentation {
+        excludeTasks += "testReleaseUnitTest"
+    }
+
+    filters {
+        classes {
+            includes.addAll(koverIncludeClasses)
+        }
+    }
 }

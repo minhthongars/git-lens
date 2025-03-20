@@ -11,4 +11,4 @@ class SaveUserDetailUseCase(
         operator fun invoke(user: UserDetail): Flow<ResourceState<Unit>> {
             return localUserRepository.insertUserDetail(user)
         }
-    }
+}

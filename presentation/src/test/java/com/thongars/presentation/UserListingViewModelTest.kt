@@ -8,8 +8,9 @@ import com.thongars.domain.usecase.FetchUserUseCase
 import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.model.User
 import com.thongars.presentation.ui.userlisting.UserListingViewModel
-import com.thongars.utilities.test.BaseTestClassNoPowerMock
+import com.thongars.test.BaseTestClassNoPowerMock
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -18,6 +19,7 @@ import org.junit.Assert
 import org.junit.Test
 import java.net.SocketTimeoutException
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UserListingViewModelTest: BaseTestClassNoPowerMock() {
 
     private lateinit var target: UserListingViewModel

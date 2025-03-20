@@ -1,4 +1,4 @@
-package com.thongars.utilities.test
+package com.thongars.test
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.MockKAnnotations

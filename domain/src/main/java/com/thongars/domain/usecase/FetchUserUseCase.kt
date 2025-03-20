@@ -10,7 +10,6 @@ class FetchUserUseCase(
 ) {
 
     operator fun invoke(): Flow<PagingData<User>> {
-        return localUserRepository
-            .userPagingDataFlow()
+        return localUserRepository.userPagingDataFlow()
     }
 }

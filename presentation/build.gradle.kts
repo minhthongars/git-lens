@@ -3,9 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.kover)
 }
 
 android {
@@ -41,10 +40,29 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/*"
+            excludes += "META-INF/*"
+        }
+    }
 }
 
 ksp {
     arg("room.schemaLocation", "$projectDir/schemas")
+}
+
+val koverIncludeClasses: List<String> by rootProject.extra
+kover {
+    instrumentation {
+        excludeTasks += "testReleaseUnitTest"
+    }
+
+    filters {
+        classes {
+            includes.addAll(koverIncludeClasses)
+        }
+    }
 }
 
 dependencies {
@@ -52,8 +70,7 @@ dependencies {
     // Modules
     implementation(project(":domain"))
     implementation(project(":utilities"))
-    testApi(project(":utilities"))
-    testImplementation(project(":utilities"))
+    implementation(project(":test"))
 
     // AndroidX Core and Lifecycle
     implementation(libs.androidx.core.ktx)
@@ -121,6 +138,4 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.androidx.test.rules)
-
-
 }

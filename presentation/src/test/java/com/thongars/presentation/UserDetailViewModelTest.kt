@@ -10,12 +10,13 @@ import com.thongars.domain.usecase.SaveUserDetailUseCase
 import com.thongars.presentation.mapper.toPresentation
 import com.thongars.presentation.ui.route.Screen
 import com.thongars.presentation.ui.userdetail.UserDetailViewModel
-import com.thongars.utilities.test.BaseTestClassNoPowerMock
+import com.thongars.test.BaseTestClassNoPowerMock
 import com.thongars.utilities.ResourceState
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class UserDetailViewModelTest: BaseTestClassNoPowerMock() {
 
     private lateinit var target: UserDetailViewModel

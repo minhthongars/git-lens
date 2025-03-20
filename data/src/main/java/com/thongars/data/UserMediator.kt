@@ -9,7 +9,6 @@ import com.thongars.data.database.model.UserEntity
 import com.thongars.data.mapper.toEntity
 import com.thongars.data.remote.ApiConstant
 import com.thongars.domain.repository.RemoteUserRepository
-import io.ktor.client.HttpClient
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.TimeUnit
 
@@ -57,12 +56,12 @@ class UserMediator(
             val users = remoteUserRepository.fetchUserListing(
                 limit = state.config.pageSize,
                 since = since
-            ).map {
-                it.toEntity()
+            ).map { user ->
+                user.toEntity()
             }
 
-            runBlocking {
-                if (loadType == LoadType.REFRESH && since == 0) {
+            if (loadType == LoadType.REFRESH && since == 0) {
+                runBlocking {
                     userDao.clearAll()
                 }
             }

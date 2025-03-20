@@ -1,5 +1,6 @@
 package com.thongars.presentation.ui.userlisting
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,8 @@ import androidx.paging.LoadStates
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import com.thongars.presentation.model.User
 import com.thongars.presentation.ui.component.ErrorScreenComponent
 import com.thongars.presentation.ui.component.FooterMessage
@@ -126,7 +129,8 @@ fun UserListingDisplay(
 
         items(
             count = pagingItems.itemCount,
-            key = { index -> pagingItems[index]?.userName.orEmpty() }
+            key = pagingItems.itemKey { it.userName },
+            contentType = pagingItems.itemContentType { "contentType" }
         ) { index ->
             pagingItems[index]?.let { user ->
                 UserItem(

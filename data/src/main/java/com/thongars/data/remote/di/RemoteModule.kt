@@ -34,7 +34,6 @@ val remoteModule = module {
                     override fun log(message: String) {
                         Log.d("HttpLogging:", message)
                     }
-
                 }
             }
 

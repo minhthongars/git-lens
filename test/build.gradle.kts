@@ -1,16 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.thongars.utilities"
+    namespace = "com.thongars.test"
     compileSdk = 34
 
     defaultConfig {
-
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -33,23 +30,32 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        buildConfig = true
-    }
-    packaging {
-        resources {
-            excludes += "/META-INF/*"
-            excludes += "META-INF/*"
-        }
-    }
 }
 
 dependencies {
 
-    // Coroutines
-    implementation(libs.kotlinx.coroutineAndroid)
-    implementation(libs.kotlinx.coroutine)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
 
-    // Serialization
-    implementation(libs.kotlinx.serialization.json)
+    // Testing
+    api(libs.junit)
+    api(libs.androidx.junit)
+    api(libs.androidx.espresso.core)
+    api(platform(libs.androidx.compose.bom))
+    api(libs.androidx.ui.test.junit4)
+
+    api(libs.kotlin)
+    api(libs.mockito.core)
+    api(libs.powermock.core)
+    api(libs.powermock.junit4)
+    api(libs.powermock.mockito2)
+    api(libs.core.testing)
+    api(libs.io.mockk)
+    api(libs.assertj.core)
+    api(libs.androidx.test.runner)
+    api(libs.kotlinx.coroutines.test)
+
+    api(libs.androidx.test.core)
+    api(libs.androidx.test.rules)
+    api(libs.androidx.paging.test)
 }

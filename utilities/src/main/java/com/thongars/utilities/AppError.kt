@@ -1,5 +1,11 @@
 package com.thongars.utilities
 
+import android.database.sqlite.SQLiteException
+import android.net.http.HttpException
+import android.os.Build
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
+
 sealed class AppError(
     private val message: String,
     private val cause: Throwable? = null
@@ -17,10 +23,10 @@ sealed class AppError(
 
 fun Throwable.mapToAppError(): AppError {
     return when (this) {
-        is java.net.UnknownHostException -> AppError.NetworkError(this)
-        is java.net.SocketTimeoutException -> AppError.TimeoutError(this)
-        is retrofit2.HttpException -> AppError.ServerError(this)
-        is android.database.sqlite.SQLiteException -> AppError.DatabaseError(this)
+        is UnknownHostException -> AppError.NetworkError(this)
+        is SocketTimeoutException -> AppError.TimeoutError(this)
+        is SQLiteException -> AppError.DatabaseError(this)
+        //is HttpException -> AppError.ServerError(this)
         else -> AppError.UnknownError(this)
     }
 }
