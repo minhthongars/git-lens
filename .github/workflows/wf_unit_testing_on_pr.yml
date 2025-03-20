@@ -1,0 +1,27 @@
+name: WF Unit Testing and Detekt
+
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        default: "Default note"
+        description: "What's new"
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - release/**
+      - hotfix/**
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  job-unit-testing:
+    name: Job Unit Testing
+    runs-on: ct-android
+    steps:
+      - uses: actions/checkout@v3
+      - name: Unit Testing
+        run: ./gradlew koverHtmlReport
