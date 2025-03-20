@@ -20,7 +20,7 @@ concurrency:
 jobs:
   job-unit-testing:
     name: Job Unit Testing
-    runs-on: ct-android
+    runs-on: mt-android
     steps:
       - uses: actions/checkout@v3
       - name: Unit Testing
