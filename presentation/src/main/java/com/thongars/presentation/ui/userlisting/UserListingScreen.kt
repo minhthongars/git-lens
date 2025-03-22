@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.paging.LoadState
@@ -41,6 +42,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun UserListingScreen(
     viewModel: UserListingViewModel = koinViewModel(),
+    splashScreen: SplashScreen,
     navController: NavHostController
 ) {
 
@@ -59,6 +61,9 @@ fun UserListingScreen(
                     }
                     is UserListingViewModel.UiAction.ReloadUserListing -> {
                         userPagingItems.refresh()
+                    }
+                    is UserListingViewModel.UiAction.TurnOffSplashScreen -> {
+                        splashScreen.setKeepOnScreenCondition { false }
                     }
                     else -> Unit
                 }

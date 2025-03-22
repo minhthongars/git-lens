@@ -1,10 +1,13 @@
 package com.thongars.presentation.ui
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.Keep
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -20,6 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,26 +35,64 @@ import com.thongars.presentation.ui.route.Screen
 import com.thongars.presentation.ui.theme.GitLensTheme
 import com.thongars.presentation.ui.userdetail.UserDetailScreen
 import com.thongars.presentation.ui.userlisting.UserListingScreen
-import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
+
         setContent {
             GitLensTheme(
                 dynamicColor = false
             ) {
-                MainScreen()
+                MainScreen(
+                    mainViewModel = viewModel,
+                    splashScreen = setUpSplashScreen()
+                )
             }
         }
+    }
 
+    private fun setUpSplashScreen(): SplashScreen {
+        val splashScreen = installSplashScreen()
+        with(splashScreen) {
+            setKeepOnScreenCondition { true }
+            setOnExitAnimationListener { screen ->
+                val zoomX = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_X,
+                    0.4f,
+                    0.0f
+                )
+                zoomX.interpolator = OvershootInterpolator()
+                zoomX.duration = 500L
+                zoomX.doOnEnd { screen.remove() }
+
+                val zoomY = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_Y,
+                    0.4f,
+                    0.0f
+                )
+                zoomY.interpolator = OvershootInterpolator()
+                zoomY.duration = 500L
+                zoomY.doOnEnd { screen.remove() }
+
+                zoomX.start()
+                zoomY.start()
+            }
+        }
+        return splashScreen
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
+fun MainScreen(mainViewModel: MainViewModel, splashScreen: SplashScreen) {
     val navController = rememberNavController()
 
     val currentBackStack by navController
@@ -96,7 +140,8 @@ fun MainScreen(mainViewModel: MainViewModel = koinViewModel()) {
         ) {
             composable<Screen.UserListing> {
                 UserListingScreen(
-                    navController = navController
+                    navController = navController,
+                    splashScreen = splashScreen
                 )
             }
             composable<Screen.UserDetail>(

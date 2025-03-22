@@ -14,6 +14,7 @@ import com.thongars.utilities.ResourceState
 import com.thongars.utilities.safeFetchDataCall
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 
@@ -71,6 +72,10 @@ class LocalUserRepositoryImpl(
                 }
             }
             .flowOn(ioDispatcher)
+    }
+
+    override fun hasData(): Flow<Boolean> {
+        return flowOf(false)
     }
 
 }

@@ -28,16 +28,34 @@ android {
         }
     }
 
+    signingConfigs {
+
+        create("release") {
+            storeFile = file("gl-release-key.jks")
+            storePassword = "andro1d-mt"
+            keyAlias = "gl-release"
+            keyPassword = "andro1d-mt"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            isDebuggable = true
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -59,10 +77,6 @@ android {
         }
     }
 
-}
-
-ksp {
-    arg("room.schemaLocation", "$projectDir/schemas")
 }
 
 dependencies {

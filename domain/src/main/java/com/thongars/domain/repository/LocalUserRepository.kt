@@ -18,4 +18,6 @@ interface LocalUserRepository {
 
     fun getAllUserDetail(): Flow<List<UserDetail>>
 
+    fun hasData(): Flow<Boolean>
+
 }
