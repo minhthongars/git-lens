@@ -42,7 +42,7 @@ class SaveUserDetailUseCaseTest: BaseTestClassNoPowerMock() {
 
         val actualResult = target.invoke(mockUserDetail).toList()
 
-        Assert.assertTrue(actualResult.size == 1000) //test
+        Assert.assertTrue(actualResult.size == 1)
         Assert.assertTrue(actualResult.first() == mockData)
     }
 

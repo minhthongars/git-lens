@@ -15,7 +15,7 @@ import com.thongars.data.database.UserDatabase
 class UserContentProvider : ContentProvider() {
 
     companion object {
-        // Authority được định nghĩa dựa trên package (phải là duy nhất)
+
         private const val AUTHORITY = "com.thongars.gitlens.provider"
         private const val PATH_USER = "users"
 
