@@ -24,3 +24,5 @@ Tech Stack:\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Local Database: Room\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State Management: Flow\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Testing
+
+CI pipeline to run tests every time a pull request is created or reopened.\
