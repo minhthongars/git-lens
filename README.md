@@ -1,9 +1,3 @@
-
-(video)\
-https://github.com/user-attachments/assets/1af8b1eb-515c-49ae-914f-8e09afeae2bf
-
-(I have delay api call)
-
 An Android application that allows users to browse GitHub users, view user details, and supports data caching for offline usage.
 
 Features:\
@@ -25,4 +19,7 @@ Tech Stack:\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;State Management: Flow\
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Testing
 
-CI pipeline to run tests every time a pull request is created or reopened.\
+CI pipeline to run tests every time a pull request is created or reopened.
+
+For this video, View the user list (or user detail) while online or offline, handling errors differently for each scenario depending on whether the database contains data or not.
+<video src='https://github.com/user-attachments/assets/1af8b1eb-515c-49ae-914f-8e09afeae2bf' width=180/>
